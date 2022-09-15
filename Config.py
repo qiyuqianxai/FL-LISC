@@ -1,7 +1,7 @@
 
 class Config():
     Stu_model_name = "resnet18"
-    dataset = "mnist"
+    dataset = "cifar10"
     n_clients = 20
     n_strong_clients = 5
     n_weak_clients = n_clients - n_strong_clients

@@ -13,6 +13,7 @@ from torch.nn import functional as F
 from data_utils import get_data_loaders
 from Config import Config
 import json
+import time
 # torch.cuda.set_device(0)
 def same_seeds(seed):
     # Python built-in random module
@@ -58,6 +59,7 @@ def save_images(y, x_rec, save_pth):
 
 # training based on KDHT
 def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client_snr = None, client_id=0,com_round=0):
+    start = time.time()
     checkpoint_path = os.path.join(cfg.checkpoints_dir, f"{client_id}")
     os.makedirs(checkpoint_path, exist_ok=True)
     channel_name = "rali" if cfg.use_Rali else "awgn"
@@ -75,18 +77,37 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
     stu_model.to(cfg.device)
     mentor_model.to(cfg.device)
     # define optimizer
-    optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr,
+    optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr/100,
                                              weight_decay=cfg.weight_delay)
     optimizer_stu_decoder = torch.optim.Adam(stu_model.isc_model.decoder.parameters(), lr=cfg.isc_lr,
                                              weight_decay=cfg.weight_delay)
     optimizer_stu_channel = torch.optim.Adam(stu_model.ch_model.parameters(), lr=cfg.channel_lr,
                                              weight_decay=cfg.weight_delay)
-    optimizer_mentor_encoder = torch.optim.Adam(mentor_model.isc_model.encoder.parameters(), lr=cfg.isc_lr,
+    optimizer_mentor_encoder = torch.optim.Adam(mentor_model.isc_model.encoder.parameters(), lr=cfg.isc_lr/100,
                                              weight_decay=cfg.weight_delay)
     optimizer_mentor_decoder = torch.optim.Adam(mentor_model.isc_model.decoder.parameters(), lr=cfg.isc_lr,
                                              weight_decay=cfg.weight_delay)
     optimizer_mentor_channel = torch.optim.Adam(mentor_model.ch_model.parameters(), lr=cfg.channel_lr,
                                              weight_decay=cfg.weight_delay)
+
+    scheduler_mentor_decoder = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer_mentor_decoder, mode='min', factor=0.1, patience=50,
+                                                           verbose=True, threshold=0.0001, threshold_mode='rel',
+                                                           cooldown=0, min_lr=0, eps=1e-08)
+    scheduler_mentor_channel = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer_mentor_channel, mode='min', factor=0.1,
+                                                             patience=50,
+                                                             verbose=True, threshold=0.0001, threshold_mode='rel',
+                                                             cooldown=0, min_lr=0, eps=1e-08)
+    scheduler_stu_decoder = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer_stu_decoder, mode='min',
+                                                                          factor=0.1, patience=50,
+                                                                          verbose=True, threshold=0.0001,
+                                                                          threshold_mode='rel',
+                                                                          cooldown=0, min_lr=0, eps=1e-08)
+    scheduler_stu_channel = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer_stu_channel, mode='min',
+                                                                          factor=0.1,
+                                                                          patience=50,
+                                                                          verbose=True, threshold=0.0001,
+                                                                          threshold_mode='rel',
+                                                                          cooldown=0, min_lr=0, eps=1e-08)
 
     # define loss function
     mse = nn.MSELoss()
@@ -130,6 +151,11 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
             optimizer_mentor_encoder.step()
             optimizer_mentor_channel.step()
 
+            scheduler_mentor_channel.step(l_mentor)
+            scheduler_mentor_decoder.step(l_mentor)
+            scheduler_stu_channel.step(l_stu)
+            scheduler_stu_decoder.step(l_stu)
+
             print(f"client{client_id}-epoch {epoch} | student loss:{l_stu} | task_loss:{l_stu_task} | dis_loss:{l_stu_dis} | hid_loss:{l_stu_hid}")
             print(f"client{client_id}-epoch {epoch} | mentor loss:{l_mentor} | task_loss:{l_mentor_task} | dis_loss:{l_mentor_dis} | hid_loss:{l_mentor_hid}")
 
@@ -150,6 +176,7 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
     with open(os.path.join(cfg.logs_dir, f"{client_id}", "loss", f"round_{com_round}_loss.json"), "w",
               encoding="utf-8")as f:
         f.write(json.dumps(loss_records, ensure_ascii=False, indent=4))
+    print("waste time:",time.time()-start)
     return stu_model.state_dict()
 
 # test student and mentor models
@@ -197,6 +224,7 @@ def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id, com_
     return test_mentor_loss, test_stu_loss
 
 def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, client_snr=None, client_id=1,com_round=1):
+    start = time.time()
     checkpoint_path = os.path.join(cfg.checkpoints_dir, f"{client_id}")
     os.makedirs(checkpoint_path, exist_ok=True)
     channel_name = "rali" if cfg.use_Rali else "awgn"
@@ -209,12 +237,24 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
 
     stu_model.to(cfg.device)
     # define optimizer
-    optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr,
+    optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr/100,
                                              weight_decay=cfg.weight_delay)
     optimizer_stu_decoder = torch.optim.Adam(stu_model.isc_model.decoder.parameters(), lr=cfg.isc_lr,
                                              weight_decay=cfg.weight_delay)
     optimizer_stu_channel = torch.optim.Adam(stu_model.ch_model.parameters(), lr=cfg.channel_lr,
                                              weight_decay=cfg.weight_delay)
+
+    scheduler_stu_decoder = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer_stu_decoder, mode='min',
+                                                                       factor=0.1, patience=50,
+                                                                       verbose=True, threshold=0.0001,
+                                                                       threshold_mode='rel',
+                                                                       cooldown=0, min_lr=0, eps=1e-08)
+    scheduler_stu_channel = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer_stu_channel, mode='min',
+                                                                       factor=0.1,
+                                                                       patience=50,
+                                                                       verbose=True, threshold=0.0001,
+                                                                       threshold_mode='rel',
+                                                                       cooldown=0, min_lr=0, eps=1e-08)
 
     # define loss function
     mse = nn.MSELoss()
@@ -240,6 +280,8 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
             optimizer_stu_decoder.step()
             optimizer_stu_channel.step()
 
+            scheduler_stu_decoder.step(l_stu)
+            scheduler_stu_channel.step(l_stu)
             print(f"client{client_id}-epoch {epoch} | student loss:{l_stu} | task_loss:{l_stu_task} | code_loss:{l_stu_coding}")
 
             train_stu_loss.append(l_stu.item())
@@ -253,6 +295,7 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
     loss_records = {"stu_train_loss":train_stu_loss,"stu_test_loss":test_stu_loss}
     with open(os.path.join(cfg.logs_dir,f"{client_id}","loss",f"round_{com_round}_loss.json"),"w",encoding="utf-8")as f:
         f.write(json.dumps(loss_records,ensure_ascii=False,indent=4))
+    print("waste time:", time.time() - start)
     return stu_model.state_dict()
 
 def Test_Stu_ISC(stu_model, test_dataloader, cfg, client_id, com_round):
