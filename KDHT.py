@@ -6,6 +6,7 @@ from nets.base_nets import base_net
 import torch
 import random
 from torch import nn
+from matplotlib import pyplot as plt
 import torchvision
 import numpy as np
 import os
@@ -33,10 +34,20 @@ def save_images(y, x_rec, save_pth):
     os.makedirs(save_pth,exist_ok=True)
     imgs_sample = (y.data + 1) / 2.0
     filename = os.path.join(save_pth,"raw.jpg")
-    torchvision.utils.save_image(imgs_sample, filename, nrow=10)
-    os.makedirs(os.path.join(save_pth, "all_imgs_raw"), exist_ok=True)
+    plt.figure()
     for i in range(len(imgs_sample)):
-        torchvision.utils.save_image(imgs_sample[i], os.path.join(save_pth, f"all_imgs_raw/{i}.jpg"))
+        plt.subplot(4, 8, i + 1)
+        plt.tight_layout()
+        # 反归一化，将数据重新映射到0-1之间
+        img = imgs_sample[i] / 2 + 0.5
+        plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+    plt.savefig(filename)
+    os.makedirs(os.path.join(save_pth, "all_imgs_raw"), exist_ok=True)
+    plt.figure()
+    for i in range(len(imgs_sample)):
+        img = imgs_sample[i] / 2 + 0.5
+        plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+        plt.savefig(os.path.join(save_pth, f"all_imgs_raw/{i}.jpg"))
     # Show 32 of the images.
     # grid_img = torchvision.utils.make_grid(imgs_sample[:100].cpu(), nrow=10)
     # plt.figure(figsize=(20, 20))
@@ -46,10 +57,20 @@ def save_images(y, x_rec, save_pth):
 
     imgs_sample = (x_rec.data + 1) / 2.0
     filename = os.path.join(save_pth, "rec.jpg")
-    torchvision.utils.save_image(imgs_sample, filename, nrow=1)
-    os.makedirs(os.path.join(save_pth, "all_imgs_rec"), exist_ok=True)
+    plt.figure()
     for i in range(len(imgs_sample)):
-        torchvision.utils.save_image(imgs_sample[i], os.path.join(save_pth, f"all_imgs_rec/{i}.jpg"))
+        plt.subplot(4, 8, i + 1)
+        plt.tight_layout()
+        # 反归一化，将数据重新映射到0-1之间
+        img = imgs_sample[i] / 2 + 0.5
+        plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+    plt.savefig(filename)
+    os.makedirs(os.path.join(save_pth, "all_imgs_rec"), exist_ok=True)
+    plt.figure()
+    for i in range(len(imgs_sample)):
+        img = imgs_sample[i] / 2 + 0.5
+        plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+        plt.savefig(os.path.join(save_pth, f"all_imgs_rec/{i}.jpg"))
     # Show 32 of the images.
     # grid_img = torchvision.utils.make_grid(imgs_sample[:100].cpu(), nrow=10)
     # plt.figure(figsize=(20, 20))

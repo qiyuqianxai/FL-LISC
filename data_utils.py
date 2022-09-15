@@ -178,22 +178,26 @@ def get_data_loaders(cfg, verbose=True):
   client_loaders = [torch.utils.data.DataLoader(CustomImageDataset(x, data_transforms, label_transforms),
                                                                 batch_size=cfg.batch_size_for_clients, shuffle=True) for x,_ in split]
   train_loader = torch.utils.data.DataLoader(CustomImageDataset(x_train, data_transforms,label_transforms), batch_size=32, shuffle=True)
-  test_loader  = torch.utils.data.DataLoader(CustomImageDataset(x_test, data_transforms,label_transforms), batch_size=32, shuffle=False)
+  test_loader  = torch.utils.data.DataLoader(CustomImageDataset(x_test, data_transforms,label_transforms), batch_size=32, shuffle=True)
 
-  examples = enumerate(test_loader)  # img&label
-  batch_idx, (imgs, labels) = next(examples)  # 读取数据,batch_idx从0开始
-
-  # -------------------------------数据显示--------------------------------------------
-  # # 显示6张图片
+  # examples = enumerate(test_loader)  # img&label
+  # batch_idx, (imgs, labels) = next(examples)  # 读取数据,batch_idx从0开始
+  # 显示6张图片
   # import matplotlib.pyplot as plt
-  # fig = plt.figure()
+  # plt.figure()
   # for i in range(6):
   #     plt.subplot(2, 3, i + 1)
   #     plt.tight_layout()
-  #     plt.imshow(imgs[i][0], cmap='gray', interpolation='none')  # 子显示
-  #     # plt.title("Ground Truth: {}".format(labels[i]))  # 显示title
-  #
-  # plt.show()
+  #     # 反归一化，将数据重新映射到0-1之间
+  #     img = imgs[i] / 2 + 0.5
+  #     plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+  # plt.savefig("res.jpg")
+  # # plt.show()
+  # plt.figure()
+  # for i in range(6):
+  #     img = imgs[i] / 2 + 0.5
+  #     plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+  #     plt.savefig(f"res{i}.jpg")
   stats = {"split": [x.shape[0] for x,y in split]}
 
   return client_loaders, train_loader, test_loader, stats
