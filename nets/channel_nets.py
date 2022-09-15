@@ -140,7 +140,7 @@ class channel_net(nn.Module):
     def forward(self, x, device="cpu"):
         self.h.to(device)
         x = self.enc_fc1(x)
-        x = self.tanh(x)
+        x = self.relu(x)
         x = self.enc_fc2(x)
 
         if self.rali:
@@ -171,7 +171,7 @@ class channel_net(nn.Module):
             x = complex_conv_transpose(h_inv, x)
 
         x = self.dec_fc1(x)
-        x = self.tanh(x)
+        x = self.relu(x)
         x = self.dec_fc2(x) # softmax taken at loss function
         # x = self.norm(x)
         return x

@@ -37,10 +37,9 @@ def FedAP(stu_model, mentor_model, clients_loader,train_dataloader, test_dataloa
         for client_id in range(cfg.n_clients):
             # Train strong clients with KDHT
             if client_id in strong_client_ids:
-                stu_weights = KDHT(stu_model,mentor_model,clients_loader[client_id],test_dataloader,cfg, SNR_for_clients[client_id],client_id)
+                stu_weights = KDHT(stu_model,mentor_model,clients_loader[client_id],test_dataloader,cfg, SNR_for_clients[client_id],client_id,com_round)
             else:
-                stu_weights = Train_for_weak_clients(stu_model,clients_loader[client_id],test_dataloader,cfg,SNR_for_clients[client_id],client_id)
-
+                stu_weights = Train_for_weak_clients(stu_model,clients_loader[client_id],test_dataloader,cfg,SNR_for_clients[client_id],client_id,com_round)
             # Pruning for weights
             stu_weights = Adaptive_Pruning(stu_weights,SNR_for_clients[client_id],cfg.SNR_MAX,cfg.SNR_MIN)
             weights_for_clients.append(stu_weights)

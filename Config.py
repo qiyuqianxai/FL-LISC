@@ -6,9 +6,9 @@ class Config():
     n_strong_clients = 5
     n_weak_clients = n_clients - n_strong_clients
     data_diribution_balancedness_for_clents = False
-    batch_size_for_clients = 8
+    batch_size_for_clients = 2
     communication_rounds = 30
-    epochs_for_clients = 50
+    epochs_for_clients = 5
     SNR = 5
     SNR_MAX = 25
     SNR_MIN = 0
@@ -17,6 +17,6 @@ class Config():
     isc_lr = 1e-5
     channel_lr = 1e-3
     weight_delay = 1e-5
-    device = "cuda"
+    device = "cpu"
     checkpoints_dir = "checkpoints"
     logs_dir = "logs"

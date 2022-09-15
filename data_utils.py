@@ -250,4 +250,4 @@ def get_data_loaders(cfg, verbose=True):
 
 if __name__ == '__main__':
     cfg = Config()
-    client_loaders, train_loader,test_loader, stats = get_data_loaders(cfg, True)
+    client_loaders, train_loader, test_loader, stats = get_data_loaders(cfg, True)

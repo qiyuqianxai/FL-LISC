@@ -9,6 +9,7 @@ from torch import nn
 import torchvision
 import numpy as np
 import os
+from torch.nn import functional as F
 from data_utils import get_data_loaders
 from Config import Config
 import json
@@ -28,6 +29,7 @@ def same_seeds(seed):
 
 # show image and save
 def save_images(y, x_rec, save_pth):
+    os.makedirs(save_pth,exist_ok=True)
     imgs_sample = (y.data + 1) / 2.0
     filename = os.path.join(save_pth,"raw.jpg")
     torchvision.utils.save_image(imgs_sample, filename, nrow=10)
@@ -55,7 +57,7 @@ def save_images(y, x_rec, save_pth):
     # plt.show()
 
 # training based on KDHT
-def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client_snr = None, client_id=1):
+def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client_snr = None, client_id=0,com_round=0):
     checkpoint_path = os.path.join(cfg.checkpoints_dir, f"{client_id}")
     os.makedirs(checkpoint_path, exist_ok=True)
     channel_name = "rali" if cfg.use_Rali else "awgn"
@@ -73,27 +75,26 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
     stu_model.to(cfg.device)
     mentor_model.to(cfg.device)
     # define optimizer
-    optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr/100,
-                                             weight_decay=config.weight_delay)
+    optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr,
+                                             weight_decay=cfg.weight_delay)
     optimizer_stu_decoder = torch.optim.Adam(stu_model.isc_model.decoder.parameters(), lr=cfg.isc_lr,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
     optimizer_stu_channel = torch.optim.Adam(stu_model.ch_model.parameters(), lr=cfg.channel_lr,
-                                             weight_decay=config.weight_delay)
-    optimizer_mentor_encoder = torch.optim.Adam(mentor_model.isc_model.encoder.parameters(), lr=cfg.isc_lr / 100,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
+    optimizer_mentor_encoder = torch.optim.Adam(mentor_model.isc_model.encoder.parameters(), lr=cfg.isc_lr,
+                                             weight_decay=cfg.weight_delay)
     optimizer_mentor_decoder = torch.optim.Adam(mentor_model.isc_model.decoder.parameters(), lr=cfg.isc_lr,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
     optimizer_mentor_channel = torch.optim.Adam(mentor_model.ch_model.parameters(), lr=cfg.channel_lr,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
 
     # define loss function
     mse = nn.MSELoss()
     kl = nn.KLDivLoss()
-    loss_records = []
     # training
+    train_mentor_loss = []
+    train_stu_loss = []
     for epoch in range(cfg.epochs_for_clients):
-        train_mentor_loss = []
-        train_stu_loss = []
         stu_model.train()
         mentor_model.train()
         for x,y in train_dataloader:
@@ -105,13 +106,17 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
             optimizer_mentor_decoder.zero_grad()
             x = x.to(cfg.device)
             y = y.to(cfg.device)
-            mentor_s_encoding,mentor_c_decoding,mentor_x_rec = mentor_model(x)
-            stu_s_encoding,stu_c_decoding,stu_x_rec = stu_model(x)
+            mentor_s_encoding, mentor_c_decoding, mentor_x_rec = mentor_model(x)
+            stu_s_encoding, stu_c_decoding, stu_x_rec = stu_model(x)
             # compute loss
             l_mentor_task = mse(mentor_x_rec,y)
             l_stu_task = mse(stu_x_rec,y)
-            l_mentor_dis = kl(mentor_x_rec,stu_x_rec)/(l_mentor_task+l_stu_task)
-            l_stu_dis = kl(stu_x_rec,mentor_x_rec)/(l_mentor_task+l_stu_task)
+            mentor_dist_1 = F.log_softmax(mentor_x_rec)
+            mentor_dist_2 = F.softmax(mentor_x_rec)
+            stu_dist_1 = F.log_softmax(stu_x_rec)
+            stu_dist_2 = F.softmax(stu_x_rec)
+            l_mentor_dis = kl(mentor_dist_1,stu_dist_2)/(l_mentor_task+l_stu_task)
+            l_stu_dis = kl(stu_dist_1,mentor_dist_2)/(l_mentor_task+l_stu_task)
             l_mentor_hid = l_stu_hid = (mse(stu_s_encoding,mentor_s_encoding) + mse(stu_c_decoding,mentor_c_decoding))\
                                        /(l_mentor_task+l_stu_task)
             l_stu = l_stu_task+l_stu_dis+l_stu_hid
@@ -130,21 +135,19 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
 
             train_stu_loss.append(l_stu.item())
             train_mentor_loss.append(l_mentor.item())
-        train_stu_loss = np.mean(train_stu_loss)
-        train_mentor_loss = np.mean(train_mentor_loss)
-
-        # testing
-        test_mentor_loss, test_stu_loss = Test_KDHT_ISC(stu_model,mentor_model, test_dataloader, cfg)
-
-        loss_records.append({"stu_train_loss":train_stu_loss,"stu_test_loss":test_stu_loss,"mentor_train_loss":train_mentor_loss,
-                             "mentor_test_loss":test_mentor_loss})
-        with open(os.path.join(cfg.logs_dir,f"{client_id}","loss",f"epoch_{epoch}_loss.json"),"w",encoding="utf-8")as f:
-            f.write(json.dumps(loss_records,ensure_ascii=False,indent=4))
-
         # save_weights
         torch.save(mentor_model.state_dict(),mentor_weights_path)
         torch.save(stu_model.state_dict(),stu_weights_path)
-        return stu_model.state_dict()
+
+    # testing
+    test_mentor_loss, test_stu_loss = Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg)
+    train_mentor_loss = np.mean(train_mentor_loss)
+    train_stu_loss = np.mean(train_stu_loss)
+    loss_records = {"stu_train_loss":train_stu_loss,"mentor_train_loss":train_mentor_loss,"stu_test_loss": test_stu_loss,"mentor_test_loss": test_mentor_loss}
+    with open(os.path.join(cfg.logs_dir, f"{client_id}", "loss", f"round_{com_round}_loss.json"), "w",
+              encoding="utf-8")as f:
+        f.write(json.dumps(loss_records, ensure_ascii=False, indent=4))
+    return stu_model.state_dict()
 
 # test student and mentor models
 def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id=1):
@@ -166,8 +169,13 @@ def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id=1):
             # compute loss
             l_mentor_task = mse(mentor_x_rec, y)
             l_stu_task = mse(stu_x_rec, y)
-            l_mentor_dis = kl(mentor_x_rec, stu_x_rec) / (l_mentor_task + l_stu_task)
-            l_stu_dis = kl(stu_x_rec, mentor_x_rec) / (l_mentor_task + l_stu_task)
+
+            mentor_dist_1 = F.log_softmax(mentor_x_rec)
+            mentor_dist_2 = F.softmax(mentor_x_rec)
+            stu_dist_1 = F.log_softmax(stu_x_rec)
+            stu_dist_2 = F.softmax(stu_x_rec)
+            l_mentor_dis = kl(mentor_dist_1, stu_dist_2) / (l_mentor_task + l_stu_task)
+            l_stu_dis = kl(stu_dist_1, mentor_dist_2) / (l_mentor_task + l_stu_task)
             l_mentor_hid = l_stu_hid = (mse(stu_s_encoding, mentor_s_encoding) + mse(stu_c_decoding, mentor_c_decoding)) \
                                        / (l_mentor_task + l_stu_task)
             l_stu = l_stu_task + l_stu_dis + l_stu_hid
@@ -185,7 +193,7 @@ def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id=1):
     test_mentor_loss = np.mean(test_mentor_loss)
     return test_mentor_loss, test_stu_loss
 
-def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, client_snr=None, client_id=1):
+def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, client_snr=None, client_id=1,com_round=1):
     checkpoint_path = os.path.join(cfg.checkpoints_dir, f"{client_id}")
     os.makedirs(checkpoint_path, exist_ok=True)
     channel_name = "rali" if cfg.use_Rali else "awgn"
@@ -199,15 +207,15 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
     stu_model.to(cfg.device)
     # define optimizer
     optimizer_stu_encoder = torch.optim.Adam(stu_model.isc_model.encoder.parameters(), lr=cfg.isc_lr,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
     optimizer_stu_decoder = torch.optim.Adam(stu_model.isc_model.decoder.parameters(), lr=cfg.isc_lr,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
     optimizer_stu_channel = torch.optim.Adam(stu_model.ch_model.parameters(), lr=cfg.channel_lr,
-                                             weight_decay=config.weight_delay)
+                                             weight_decay=cfg.weight_delay)
 
     # define loss function
     mse = nn.MSELoss()
-    loss_records = []
+    train_stu_loss = []
     # training
     for epoch in range(cfg.epochs_for_clients):
         train_stu_loss = []
@@ -232,16 +240,18 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
             print(f"client{client_id}-epoch {epoch} | student loss:{l_stu} | task_loss:{l_stu_task} | code_loss:{l_stu_coding}")
 
             train_stu_loss.append(l_stu.item())
-        train_stu_loss = np.mean(train_stu_loss)
-        # testing
-        test_stu_loss = Test_Stu_ISC(stu_model,test_dataloader, cfg)
-        loss_records.append({"stu_train_loss":train_stu_loss,"stu_test_loss":test_stu_loss})
-        with open(os.path.join(cfg.logs_dir,f"{client_id}","loss",f"epoch_{epoch}_loss.json"),"w",encoding="utf-8")as f:
-            f.write(json.dumps(loss_records,ensure_ascii=False,indent=4))
 
         # save_weights
-        torch.save(stu_model.state_dict(),stu_weights_path)
-        return stu_model.state_dict()
+        torch.save(stu_model.state_dict(), stu_weights_path)
+
+
+    # testing
+    test_stu_loss = Test_Stu_ISC(stu_model,test_dataloader, cfg)
+    train_stu_loss = np.mean(train_stu_loss)
+    loss_records = {"stu_train_loss":train_stu_loss,"stu_test_loss":test_stu_loss}
+    with open(os.path.join(cfg.logs_dir,f"{client_id}","loss",f"round_{com_round}_loss.json"),"w",encoding="utf-8")as f:
+        f.write(json.dumps(loss_records,ensure_ascii=False,indent=4))
+    return stu_model.state_dict()
 
 def Test_Stu_ISC(stu_model, test_dataloader, cfg, client_id=1):
     stu_model.to(cfg.device)
