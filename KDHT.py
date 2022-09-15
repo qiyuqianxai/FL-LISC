@@ -135,6 +135,9 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
 
             train_stu_loss.append(l_stu.item())
             train_mentor_loss.append(l_mentor.item())
+
+        save_images(y, mentor_x_rec, os.path.join(cfg.logs_dir, f"{client_id}", "train_mentor_imgs"))
+        save_images(y, stu_x_rec, os.path.join(cfg.logs_dir, f"{client_id}", "train_student_imgs"))
         # save_weights
         torch.save(mentor_model.state_dict(),mentor_weights_path)
         torch.save(stu_model.state_dict(),stu_weights_path)
@@ -187,8 +190,8 @@ def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id=1):
 
             test_stu_loss.append(l_stu.item())
             test_mentor_loss.append(l_mentor.item())
-            save_images(y,mentor_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","mentor_imgs"))
-            save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","student_imgs"))
+        save_images(y,mentor_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","test_mentor_imgs"))
+        save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","test_student_imgs"))
     test_stu_loss = np.mean(test_stu_loss)
     test_mentor_loss = np.mean(test_mentor_loss)
     return test_mentor_loss, test_stu_loss
@@ -241,10 +244,9 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
 
             train_stu_loss.append(l_stu.item())
 
+        save_images(y, stu_x_rec, os.path.join(cfg.logs_dir, f"{client_id}", "train_student_imgs"))
         # save_weights
         torch.save(stu_model.state_dict(), stu_weights_path)
-
-
     # testing
     test_stu_loss = Test_Stu_ISC(stu_model,test_dataloader, cfg)
     train_stu_loss = np.mean(train_stu_loss)
@@ -274,7 +276,7 @@ def Test_Stu_ISC(stu_model, test_dataloader, cfg, client_id=1):
                 f"client_id{client_id}-test | student loss:{l_stu} | task_loss:{l_stu_task} | code_loss:{l_stu_coding}")
 
             test_stu_loss.append(l_stu.item())
-            save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","student_imgs"))
+        save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","test_student_imgs"))
     test_stu_loss = np.mean(test_stu_loss)
     return test_stu_loss
 
