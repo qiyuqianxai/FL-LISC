@@ -19,6 +19,7 @@ def get_mnist():
   
   x_train, y_train = data_train.train_data.view(-1,1,28,28).expand(-1, 3, -1, -1).numpy()/255, np.array(data_train.train_labels)
   x_test, y_test = data_test.test_data.view(-1,1,28,28).expand(-1, 3, -1, -1).numpy()/255, np.array(data_test.test_labels)
+
   return x_train, y_train, x_test, y_test
 
 
@@ -57,71 +58,6 @@ def print_image_data_stats(data_train, labels_train, data_test, labels_test):
 #-------------------------------------------------------------------------------------------------------
 # SPLIT DATA AMONG CLIENTS
 #-------------------------------------------------------------------------------------------------------
-# def split_image_data(data, labels, n_clients=10, classes_per_client=10, shuffle=True, verbose=True, balancedness=None):
-#   '''
-#   Splits (data, labels) evenly among 'n_clients s.t. every client holds 'classes_per_client
-#   different labels
-#   data : [n_data x shape]
-#   labels : [n_data (x 1)] from 0 to n_labels
-#   '''
-#   # constants
-#   n_data = data.shape[0]
-#   n_labels = np.max(labels) + 1
-#
-#   if balancedness >= 1.0:
-#     data_per_client = [n_data // n_clients]*n_clients
-#     data_per_client_per_class = [data_per_client[0] // classes_per_client]*n_clients
-#   else:
-#     fracs = balancedness**np.linspace(0,n_clients-1, n_clients)
-#     fracs /= np.sum(fracs)
-#     fracs = 0.1/n_clients + (1-0.1)*fracs
-#     data_per_client = [np.floor(frac*n_data).astype('int') for frac in fracs]
-#
-#     data_per_client = data_per_client[::-1]
-#
-#     data_per_client_per_class = [np.maximum(1,nd // classes_per_client) for nd in data_per_client]
-#
-#   if sum(data_per_client) > n_data:
-#     print("Impossible Split")
-#     exit()
-#
-#   # sort for labels
-#   data_idcs = [[] for i in range(n_labels)]
-#   for j, label in enumerate(labels):
-#     data_idcs[label] += [j]
-#   if shuffle:
-#     for idcs in data_idcs:
-#       np.random.shuffle(idcs)
-#
-#   # split data among clients
-#   clients_split = []
-#   c = 0
-#   for i in range(n_clients):
-#     client_idcs = []
-#     budget = data_per_client[i]
-#     c = np.random.randint(n_labels)
-#     while budget > 0:
-#       take = min(data_per_client_per_class[i], len(data_idcs[c]), budget)
-#
-#       client_idcs += data_idcs[c][:take]
-#       data_idcs[c] = data_idcs[c][take:]
-#
-#       budget -= take
-#       c = (c + 1) % n_labels
-#
-#     clients_split += [(data[client_idcs], labels[client_idcs])]
-#
-#   def print_split(clients_split):
-#     print("Data split:")
-#     for i, client in enumerate(clients_split):
-#       split = np.sum(client[1].reshape(1,-1)==np.arange(n_labels).reshape(-1,1), axis=1)
-#       print(" - Client {}: {}".format(i,split))
-#     print()
-#
-#   if verbose:
-#     print_split(clients_split)
-#
-#   return clients_split
 
 def split_image_data(data,labels, n_clients=10, avg_alloc=False):
     clients_data = []
@@ -244,6 +180,20 @@ def get_data_loaders(cfg, verbose=True):
   train_loader = torch.utils.data.DataLoader(CustomImageDataset(x_train, data_transforms,label_transforms), batch_size=32, shuffle=True)
   test_loader  = torch.utils.data.DataLoader(CustomImageDataset(x_test, data_transforms,label_transforms), batch_size=32, shuffle=False)
 
+  examples = enumerate(test_loader)  # img&label
+  batch_idx, (imgs, labels) = next(examples)  # 读取数据,batch_idx从0开始
+
+  # -------------------------------数据显示--------------------------------------------
+  # # 显示6张图片
+  # import matplotlib.pyplot as plt
+  # fig = plt.figure()
+  # for i in range(6):
+  #     plt.subplot(2, 3, i + 1)
+  #     plt.tight_layout()
+  #     plt.imshow(imgs[i][0], cmap='gray', interpolation='none')  # 子显示
+  #     # plt.title("Ground Truth: {}".format(labels[i]))  # 显示title
+  #
+  # plt.show()
   stats = {"split": [x.shape[0] for x,y in split]}
 
   return client_loaders, train_loader, test_loader, stats

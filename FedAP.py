@@ -12,7 +12,7 @@ from nets.channel_nets import channel_net
 from nets.base_nets import base_net
 from data_utils import get_data_loaders
 from KDHT import KDHT,Train_for_weak_clients
-
+# torch.cuda.set_device(0)
 def same_seeds(seed):
     # Python built-in random module
     random.seed(seed)

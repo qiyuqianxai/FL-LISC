@@ -13,7 +13,7 @@ from torch.nn import functional as F
 from data_utils import get_data_loaders
 from Config import Config
 import json
-
+# torch.cuda.set_device(0)
 def same_seeds(seed):
     # Python built-in random module
     random.seed(seed)
@@ -136,14 +136,14 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
             train_stu_loss.append(l_stu.item())
             train_mentor_loss.append(l_mentor.item())
 
-        save_images(y, mentor_x_rec, os.path.join(cfg.logs_dir, f"{client_id}", "train_mentor_imgs"))
-        save_images(y, stu_x_rec, os.path.join(cfg.logs_dir, f"{client_id}", "train_student_imgs"))
+        save_images(y, mentor_x_rec, os.path.join(cfg.logs_dir, f"{client_id}","save_imgs",f"round_{com_round}_train_mentor_imgs"))
+        save_images(y, stu_x_rec, os.path.join(cfg.logs_dir, f"{client_id}","save_imgs", f"round_{com_round}_train_student_imgs"))
         # save_weights
         torch.save(mentor_model.state_dict(),mentor_weights_path)
         torch.save(stu_model.state_dict(),stu_weights_path)
 
     # testing
-    test_mentor_loss, test_stu_loss = Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg)
+    test_mentor_loss, test_stu_loss = Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id, com_round)
     train_mentor_loss = np.mean(train_mentor_loss)
     train_stu_loss = np.mean(train_stu_loss)
     loss_records = {"stu_train_loss":train_stu_loss,"mentor_train_loss":train_mentor_loss,"stu_test_loss": test_stu_loss,"mentor_test_loss": test_mentor_loss}
@@ -153,7 +153,7 @@ def KDHT(stu_model, mentor_model, train_dataloader, test_dataloader, cfg, client
     return stu_model.state_dict()
 
 # test student and mentor models
-def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id=1):
+def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id, com_round):
     stu_model.to(cfg.device)
     mentor_model.to(cfg.device)
     stu_model.eval()
@@ -190,7 +190,7 @@ def Test_KDHT_ISC(stu_model, mentor_model, test_dataloader, cfg, client_id=1):
 
             test_stu_loss.append(l_stu.item())
             test_mentor_loss.append(l_mentor.item())
-        save_images(y,mentor_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","test_mentor_imgs"))
+        save_images(y,mentor_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","save_imgs", f"round_{com_round}_test_mentor_imgs"))
         save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","test_student_imgs"))
     test_stu_loss = np.mean(test_stu_loss)
     test_mentor_loss = np.mean(test_mentor_loss)
@@ -244,18 +244,18 @@ def Train_for_weak_clients(stu_model, train_dataloader, test_dataloader, cfg, cl
 
             train_stu_loss.append(l_stu.item())
 
-        save_images(y, stu_x_rec, os.path.join(cfg.logs_dir, f"{client_id}", "train_student_imgs"))
+        save_images(y, stu_x_rec, os.path.join(cfg.logs_dir, f"{client_id}","save_imgs",f"round_{com_round}_train_student_imgs"))
         # save_weights
         torch.save(stu_model.state_dict(), stu_weights_path)
     # testing
-    test_stu_loss = Test_Stu_ISC(stu_model,test_dataloader, cfg)
+    test_stu_loss = Test_Stu_ISC(stu_model,test_dataloader, cfg,client_id, com_round)
     train_stu_loss = np.mean(train_stu_loss)
     loss_records = {"stu_train_loss":train_stu_loss,"stu_test_loss":test_stu_loss}
     with open(os.path.join(cfg.logs_dir,f"{client_id}","loss",f"round_{com_round}_loss.json"),"w",encoding="utf-8")as f:
         f.write(json.dumps(loss_records,ensure_ascii=False,indent=4))
     return stu_model.state_dict()
 
-def Test_Stu_ISC(stu_model, test_dataloader, cfg, client_id=1):
+def Test_Stu_ISC(stu_model, test_dataloader, cfg, client_id, com_round):
     stu_model.to(cfg.device)
     stu_model.eval()
     # define loss function
@@ -276,7 +276,7 @@ def Test_Stu_ISC(stu_model, test_dataloader, cfg, client_id=1):
                 f"client_id{client_id}-test | student loss:{l_stu} | task_loss:{l_stu_task} | code_loss:{l_stu_coding}")
 
             test_stu_loss.append(l_stu.item())
-        save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","test_student_imgs"))
+        save_images(y,stu_x_rec,os.path.join(cfg.logs_dir,f"{client_id}","save_imgs",f"round_{com_round}_test_student_imgs"))
     test_stu_loss = np.mean(test_stu_loss)
     return test_stu_loss
 
