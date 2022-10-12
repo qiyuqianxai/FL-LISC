@@ -1,0 +1,452 @@
+D:\python\python.exe D:/pengyubo/pythonProj/Ternary-Federated/Ternary_Fed.py
+
+Data:
+ - Train Set: ((60000, 1, 28, 28),(60000,)), Range: [0.000, 1.000], Labels: 0,..,9
+ - Test Set: ((10000, 1, 28, 28),(10000,)), Range: [0.000, 1.000], Labels: 0,..,9
+Data split:
+ - Client 0: [672 666 666 666 666 666 666 666 666 666]
+ - Client 1: [666 666 666 666 672 666 666 666 666 666]
+ - Client 2: [666 666 666 666 672 666 666 666 666 666]
+ - Client 3: [666 666 666 666 672 666 666 666 666 666]
+ - Client 4: [672 666 666 666 666 666 666 666 666 666]
+ - Client 5: [666 666 666 666 666 666 666 666 672 666]
+ - Client 6: [666 666 666 666 666 666 666 672 666 666]
+ - Client 7: [666 666 666 666 666 666 666 672 666 666]
+ - Client 8: [ 583 1408  630  803  496   93  590  925  517  621]
+
+Round 0 start
+Client: 3, test loss:2.563, test acc:0.154, test top5:0.613, elapsed time:6.992
+Client: 7, test loss:3.235, test acc:0.113, test top5:0.510, elapsed time:4.942
+Client: 5, test loss:3.014, test acc:0.117, test top5:0.559, elapsed time:4.950
+Client: 0, test loss:2.193, test acc:0.224, test top5:0.725, elapsed time:5.104
+Client: 8, test loss:3.046, test acc:0.117, test top5:0.613, elapsed time:4.964
+F: 0.113 TF: 0.114
+S1
+Round   0, Global loss 3.242, Global Acc 0.114
+Round 1 start
+Client: 5, test loss:0.943, test acc:0.713, test top5:0.975, elapsed time:5.036
+Client: 0, test loss:0.853, test acc:0.755, test top5:0.980, elapsed time:5.168
+Client: 7, test loss:6.937, test acc:0.173, test top5:0.632, elapsed time:4.891
+Client: 4, test loss:0.876, test acc:0.754, test top5:0.979, elapsed time:4.879
+Client: 3, test loss:0.892, test acc:0.739, test top5:0.974, elapsed time:4.866
+F: 0.778 TF: 0.757
+S1
+Round   1, Global loss 0.851, Global Acc 0.757
+Round 2 start
+Client: 0, test loss:2.437, test acc:0.379, test top5:0.893, elapsed time:4.908
+Client: 1, test loss:7.620, test acc:0.136, test top5:0.752, elapsed time:4.988
+Client: 5, test loss:0.618, test acc:0.829, test top5:0.986, elapsed time:4.921
+Client: 6, test loss:11.425, test acc:0.126, test top5:0.674, elapsed time:4.872
+Client: 2, test loss:0.626, test acc:0.822, test top5:0.987, elapsed time:4.927
+F: 0.823 TF: 0.821
+S1
+Round   2, Global loss 0.641, Global Acc 0.821
+Round 3 start
+Client: 7, test loss:0.850, test acc:0.736, test top5:0.957, elapsed time:4.925
+Client: 8, test loss:0.566, test acc:0.822, test top5:0.983, elapsed time:4.971
+Client: 5, test loss:0.596, test acc:0.818, test top5:0.982, elapsed time:4.664
+Client: 2, test loss:0.649, test acc:0.798, test top5:0.978, elapsed time:4.984
+Client: 0, test loss:0.481, test acc:0.868, test top5:0.988, elapsed time:4.975
+F: 0.855 TF: 0.877
+S1
+Round   3, Global loss 0.436, Global Acc 0.877
+Round 4 start
+Client: 7, test loss:0.342, test acc:0.903, test top5:0.995, elapsed time:4.932
+Client: 6, test loss:0.412, test acc:0.872, test top5:0.992, elapsed time:4.757
+Client: 0, test loss:0.363, test acc:0.898, test top5:0.994, elapsed time:4.907
+Client: 8, test loss:0.507, test acc:0.831, test top5:0.991, elapsed time:5.000
+Client: 4, test loss:0.347, test acc:0.899, test top5:0.996, elapsed time:4.789
+F: 0.899 TF: 0.897
+S1
+Round   4, Global loss 0.341, Global Acc 0.897
+Round 5 start
+Client: 3, test loss:0.310, test acc:0.913, test top5:0.995, elapsed time:4.955
+Client: 1, test loss:1.271, test acc:0.656, test top5:0.966, elapsed time:5.079
+Client: 4, test loss:0.310, test acc:0.910, test top5:0.995, elapsed time:4.934
+Client: 0, test loss:0.280, test acc:0.919, test top5:0.996, elapsed time:5.072
+Client: 8, test loss:0.395, test acc:0.861, test top5:0.995, elapsed time:4.835
+F: 0.917 TF: 0.922
+S1
+Round   5, Global loss 0.268, Global Acc 0.922
+Round 6 start
+Client: 4, test loss:0.268, test acc:0.919, test top5:0.997, elapsed time:4.963
+Client: 2, test loss:0.269, test acc:0.920, test top5:0.996, elapsed time:5.328
+Client: 1, test loss:0.244, test acc:0.929, test top5:0.996, elapsed time:4.960
+Client: 0, test loss:0.249, test acc:0.924, test top5:0.996, elapsed time:5.078
+Client: 5, test loss:1.384, test acc:0.581, test top5:0.911, elapsed time:5.227
+F: 0.817 TF: 0.932
+Round   6, Global loss 0.548, Global Acc 0.817
+Round 7 start
+Client: 4, test loss:0.249, test acc:0.925, test top5:0.997, elapsed time:17.085
+Client: 1, test loss:1.761, test acc:0.538, test top5:0.882, elapsed time:4.822
+Client: 7, test loss:0.259, test acc:0.918, test top5:0.996, elapsed time:5.564
+Client: 2, test loss:1.075, test acc:0.701, test top5:0.932, elapsed time:4.864
+Client: 8, test loss:0.305, test acc:0.902, test top5:0.996, elapsed time:4.971
+F: 0.624 TF: 0.910
+Round   7, Global loss 1.351, Global Acc 0.624
+Round 8 start
+Client: 0, test loss:0.222, test acc:0.932, test top5:0.997, elapsed time:5.158
+Client: 1, test loss:0.221, test acc:0.935, test top5:0.997, elapsed time:4.881
+Client: 4, test loss:3.065, test acc:0.355, test top5:0.856, elapsed time:4.975
+Client: 7, test loss:0.230, test acc:0.930, test top5:0.997, elapsed time:4.886
+Client: 2, test loss:0.265, test acc:0.921, test top5:0.996, elapsed time:4.871
+F: 0.825 TF: 0.943
+Round   8, Global loss 0.511, Global Acc 0.825
+Round 9 start
+Client: 0, test loss:0.322, test acc:0.896, test top5:0.994, elapsed time:5.117
+Client: 8, test loss:0.268, test acc:0.917, test top5:0.997, elapsed time:4.883
+Client: 7, test loss:0.191, test acc:0.940, test top5:0.998, elapsed time:5.044
+Client: 1, test loss:0.227, test acc:0.930, test top5:0.997, elapsed time:5.054
+Client: 2, test loss:0.212, test acc:0.933, test top5:0.997, elapsed time:5.158
+F: 0.940 TF: 0.943
+S1
+Round   9, Global loss 0.184, Global Acc 0.943
+Round 10 start
+Client: 3, test loss:0.256, test acc:0.918, test top5:0.997, elapsed time:4.906
+Client: 7, test loss:0.174, test acc:0.947, test top5:0.997, elapsed time:4.855
+Client: 2, test loss:0.199, test acc:0.939, test top5:0.997, elapsed time:4.983
+Client: 4, test loss:1.057, test acc:0.698, test top5:0.934, elapsed time:4.985
+Client: 0, test loss:0.178, test acc:0.947, test top5:0.997, elapsed time:4.932
+F: 0.922 TF: 0.953
+Round  10, Global loss 0.247, Global Acc 0.922
+Round 11 start
+Client: 6, test loss:0.167, test acc:0.951, test top5:0.997, elapsed time:4.899
+Client: 1, test loss:0.178, test acc:0.946, test top5:0.998, elapsed time:5.021
+Client: 7, test loss:0.174, test acc:0.946, test top5:0.998, elapsed time:4.879
+Client: 5, test loss:0.163, test acc:0.954, test top5:0.998, elapsed time:4.807
+Client: 3, test loss:0.173, test acc:0.949, test top5:0.998, elapsed time:4.872
+F: 0.959 TF: 0.957
+S1
+Round  11, Global loss 0.149, Global Acc 0.957
+Round 12 start
+Client: 0, test loss:0.190, test acc:0.945, test top5:0.997, elapsed time:4.913
+Client: 6, test loss:3.490, test acc:0.354, test top5:0.836, elapsed time:4.891
+Client: 1, test loss:0.160, test acc:0.954, test top5:0.997, elapsed time:4.948
+Client: 2, test loss:0.173, test acc:0.948, test top5:0.998, elapsed time:5.020
+Client: 4, test loss:0.204, test acc:0.939, test top5:0.997, elapsed time:4.988
+F: 0.751 TF: 0.961
+Round  12, Global loss 0.777, Global Acc 0.751
+Round 13 start
+Client: 5, test loss:0.190, test acc:0.942, test top5:0.997, elapsed time:4.856
+Client: 6, test loss:0.217, test acc:0.934, test top5:0.997, elapsed time:5.069
+Client: 4, test loss:0.177, test acc:0.945, test top5:0.998, elapsed time:5.048
+Client: 8, test loss:0.281, test acc:0.909, test top5:0.997, elapsed time:4.894
+Client: 7, test loss:0.173, test acc:0.949, test top5:0.998, elapsed time:4.963
+F: 0.962 TF: 0.962
+S1
+Round  13, Global loss 0.127, Global Acc 0.962
+Round 14 start
+Client: 1, test loss:0.137, test acc:0.959, test top5:0.998, elapsed time:5.096
+Client: 4, test loss:0.142, test acc:0.956, test top5:0.998, elapsed time:5.170
+Client: 0, test loss:0.157, test acc:0.951, test top5:0.998, elapsed time:5.088
+Client: 7, test loss:0.140, test acc:0.957, test top5:0.998, elapsed time:5.034
+Client: 3, test loss:0.159, test acc:0.951, test top5:0.998, elapsed time:4.992
+F: 0.962 TF: 0.961
+S1
+Round  14, Global loss 0.126, Global Acc 0.961
+Round 15 start
+Client: 5, test loss:0.136, test acc:0.960, test top5:0.998, elapsed time:5.000
+Client: 2, test loss:0.191, test acc:0.944, test top5:0.997, elapsed time:4.830
+Client: 6, test loss:0.134, test acc:0.961, test top5:0.998, elapsed time:4.888
+Client: 3, test loss:0.143, test acc:0.957, test top5:0.998, elapsed time:5.035
+Client: 8, test loss:0.191, test acc:0.941, test top5:0.998, elapsed time:5.059
+F: 0.961 TF: 0.964
+S1
+Round  15, Global loss 0.120, Global Acc 0.964
+Round 16 start
+Client: 0, test loss:0.145, test acc:0.957, test top5:0.998, elapsed time:5.052
+Client: 4, test loss:0.710, test acc:0.797, test top5:0.979, elapsed time:4.798
+Client: 6, test loss:0.168, test acc:0.951, test top5:0.997, elapsed time:5.277
+Client: 1, test loss:0.174, test acc:0.946, test top5:0.998, elapsed time:5.090
+Client: 2, test loss:0.132, test acc:0.960, test top5:0.999, elapsed time:5.101
+F: 0.961 TF: 0.966
+S1
+Round  16, Global loss 0.117, Global Acc 0.966
+Round 17 start
+Client: 4, test loss:0.682, test acc:0.807, test top5:0.990, elapsed time:4.837
+Client: 2, test loss:0.183, test acc:0.943, test top5:0.998, elapsed time:4.872
+Client: 5, test loss:0.215, test acc:0.936, test top5:0.997, elapsed time:4.793
+Client: 8, test loss:0.169, test acc:0.947, test top5:0.998, elapsed time:4.991
+Client: 6, test loss:0.132, test acc:0.961, test top5:0.998, elapsed time:4.798
+F: 0.962 TF: 0.964
+S1
+Round  17, Global loss 0.119, Global Acc 0.964
+Round 18 start
+Client: 2, test loss:0.124, test acc:0.963, test top5:0.998, elapsed time:4.980
+Client: 4, test loss:0.224, test acc:0.931, test top5:0.998, elapsed time:4.815
+Client: 8, test loss:0.181, test acc:0.944, test top5:0.997, elapsed time:5.021
+Client: 6, test loss:0.639, test acc:0.827, test top5:0.988, elapsed time:5.037
+Client: 3, test loss:0.171, test acc:0.948, test top5:0.998, elapsed time:5.019
+F: 0.964 TF: 0.967
+S1
+Round  18, Global loss 0.110, Global Acc 0.967
+Round 19 start
+Client: 0, test loss:163.711, test acc:0.097, test top5:0.466, elapsed time:4.955
+Client: 3, test loss:6.512, test acc:0.315, test top5:0.829, elapsed time:4.708
+Client: 1, test loss:0.136, test acc:0.959, test top5:0.999, elapsed time:5.022
+Client: 6, test loss:0.133, test acc:0.960, test top5:0.999, elapsed time:5.020
+Client: 4, test loss:0.122, test acc:0.964, test top5:0.999, elapsed time:4.763
+F: 0.112 TF: 0.928
+Round  19, Global loss 19.829, Global Acc 0.112
+Round 20 start
+Client: 3, test loss:120.385, test acc:0.097, test top5:0.498, elapsed time:5.113
+Client: 6, test loss:8.385, test acc:0.180, test top5:0.814, elapsed time:4.913
+Client: 4, test loss:81.809, test acc:0.097, test top5:0.566, elapsed time:4.910
+Client: 2, test loss:0.999, test acc:0.772, test top5:0.982, elapsed time:5.185
+Client: 8, test loss:0.323, test acc:0.895, test top5:0.994, elapsed time:5.161
+F: 0.103 TF: 0.103
+S1
+Round  20, Global loss 25.082, Global Acc 0.103
+Round 21 start
+Client: 8, test loss:0.212, test acc:0.935, test top5:0.996, elapsed time:4.930
+Client: 3, test loss:0.131, test acc:0.961, test top5:0.999, elapsed time:4.951
+Client: 5, test loss:0.149, test acc:0.954, test top5:0.999, elapsed time:4.849
+Client: 2, test loss:0.146, test acc:0.956, test top5:0.998, elapsed time:4.970
+Client: 7, test loss:2.121, test acc:0.514, test top5:0.944, elapsed time:4.846
+F: 0.946 TF: 0.963
+S1
+Round  21, Global loss 0.120, Global Acc 0.963
+Round 22 start
+Client: 8, test loss:0.149, test acc:0.955, test top5:0.998, elapsed time:5.097
+Client: 7, test loss:0.118, test acc:0.965, test top5:0.999, elapsed time:5.104
+Client: 3, test loss:0.131, test acc:0.961, test top5:0.999, elapsed time:4.990
+Client: 2, test loss:0.115, test acc:0.966, test top5:0.999, elapsed time:5.022
+Client: 1, test loss:0.140, test acc:0.957, test top5:0.998, elapsed time:4.880
+F: 0.970 TF: 0.971
+S1
+Round  22, Global loss 0.101, Global Acc 0.971
+Round 23 start
+Client: 6, test loss:4.057, test acc:0.382, test top5:0.777, elapsed time:5.028
+Client: 0, test loss:1.728, test acc:0.598, test top5:0.899, elapsed time:4.793
+Client: 2, test loss:0.168, test acc:0.948, test top5:0.998, elapsed time:4.696
+Client: 3, test loss:0.169, test acc:0.950, test top5:0.998, elapsed time:4.788
+Client: 8, test loss:0.128, test acc:0.961, test top5:0.998, elapsed time:4.934
+F: 0.802 TF: 0.969
+Round  23, Global loss 0.660, Global Acc 0.802
+Round 24 start
+Client: 5, test loss:0.121, test acc:0.962, test top5:0.999, elapsed time:4.794
+Client: 6, test loss:0.131, test acc:0.961, test top5:0.998, elapsed time:5.020
+Client: 0, test loss:2.174, test acc:0.512, test top5:0.918, elapsed time:4.707
+Client: 2, test loss:0.175, test acc:0.948, test top5:0.997, elapsed time:5.074
+Client: 4, test loss:0.121, test acc:0.964, test top5:0.999, elapsed time:4.991
+F: 0.933 TF: 0.971
+Round  24, Global loss 0.207, Global Acc 0.933
+Round 25 start
+Client: 5, test loss:0.118, test acc:0.964, test top5:0.998, elapsed time:4.708
+Client: 7, test loss:0.119, test acc:0.965, test top5:0.999, elapsed time:4.948
+Client: 2, test loss:0.117, test acc:0.964, test top5:0.998, elapsed time:4.948
+Client: 1, test loss:0.122, test acc:0.963, test top5:0.999, elapsed time:4.904
+Client: 4, test loss:0.122, test acc:0.963, test top5:0.999, elapsed time:4.940
+F: 0.971 TF: 0.971
+S1
+Round  25, Global loss 0.096, Global Acc 0.971
+Round 26 start
+Client: 2, test loss:3.136, test acc:0.385, test top5:0.843, elapsed time:4.717
+Client: 4, test loss:0.131, test acc:0.962, test top5:0.998, elapsed time:4.876
+Client: 8, test loss:0.155, test acc:0.952, test top5:0.998, elapsed time:4.943
+Client: 7, test loss:0.184, test acc:0.942, test top5:0.998, elapsed time:4.961
+Client: 0, test loss:0.467, test acc:0.873, test top5:0.991, elapsed time:4.783
+F: 0.915 TF: 0.971
+Round  26, Global loss 0.265, Global Acc 0.915
+Round 27 start
+Client: 7, test loss:0.123, test acc:0.963, test top5:0.999, elapsed time:4.882
+Client: 0, test loss:0.122, test acc:0.964, test top5:0.998, elapsed time:4.862
+Client: 3, test loss:0.112, test acc:0.967, test top5:0.998, elapsed time:5.117
+Client: 8, test loss:0.225, test acc:0.931, test top5:0.998, elapsed time:4.732
+Client: 6, test loss:0.237, test acc:0.924, test top5:0.996, elapsed time:4.841
+F: 0.966 TF: 0.969
+S1
+Round  27, Global loss 0.108, Global Acc 0.969
+Round 28 start
+Client: 8, test loss:0.124, test acc:0.963, test top5:0.999, elapsed time:5.017
+Client: 3, test loss:0.151, test acc:0.956, test top5:0.998, elapsed time:4.794
+Client: 1, test loss:0.196, test acc:0.939, test top5:0.997, elapsed time:5.059
+Client: 6, test loss:0.113, test acc:0.967, test top5:0.999, elapsed time:5.176
+Client: 5, test loss:0.188, test acc:0.943, test top5:0.998, elapsed time:4.743
+F: 0.972 TF: 0.972
+S1
+Round  28, Global loss 0.092, Global Acc 0.972
+Round 29 start
+Client: 0, test loss:0.385, test acc:0.878, test top5:0.989, elapsed time:4.996
+Client: 1, test loss:1.136, test acc:0.665, test top5:0.961, elapsed time:5.150
+Client: 4, test loss:0.144, test acc:0.956, test top5:0.998, elapsed time:5.027
+Client: 3, test loss:0.122, test acc:0.965, test top5:0.998, elapsed time:4.772
+Client: 6, test loss:0.134, test acc:0.961, test top5:0.998, elapsed time:5.231
+F: 0.948 TF: 0.974
+S1
+Round  29, Global loss 0.089, Global Acc 0.974
+Round 30 start
+Client: 5, test loss:0.130, test acc:0.962, test top5:0.999, elapsed time:4.939
+Client: 1, test loss:0.107, test acc:0.968, test top5:0.999, elapsed time:4.876
+Client: 0, test loss:0.124, test acc:0.963, test top5:0.998, elapsed time:5.377
+Client: 2, test loss:0.107, test acc:0.967, test top5:0.999, elapsed time:4.860
+Client: 8, test loss:0.143, test acc:0.957, test top5:0.999, elapsed time:5.096
+F: 0.974 TF: 0.975
+S1
+Round  30, Global loss 0.086, Global Acc 0.975
+Round 31 start
+Client: 2, test loss:0.102, test acc:0.968, test top5:0.999, elapsed time:4.956
+Client: 7, test loss:5.251, test acc:0.388, test top5:0.827, elapsed time:4.743
+Client: 4, test loss:0.186, test acc:0.946, test top5:0.997, elapsed time:4.908
+Client: 8, test loss:4.593, test acc:0.339, test top5:0.875, elapsed time:4.722
+Client: 0, test loss:0.106, test acc:0.968, test top5:0.999, elapsed time:4.983
+F: 0.927 TF: 0.975
+Round  31, Global loss 0.251, Global Acc 0.927
+Round 32 start
+Client: 6, test loss:0.112, test acc:0.967, test top5:0.999, elapsed time:5.126
+Client: 8, test loss:0.642, test acc:0.830, test top5:0.986, elapsed time:4.821
+Client: 4, test loss:0.287, test acc:0.906, test top5:0.995, elapsed time:5.125
+Client: 0, test loss:0.107, test acc:0.969, test top5:0.999, elapsed time:5.025
+Client: 2, test loss:0.108, test acc:0.968, test top5:0.998, elapsed time:4.971
+F: 0.974 TF: 0.975
+S1
+Round  32, Global loss 0.084, Global Acc 0.975
+Round 33 start
+Client: 3, test loss:0.111, test acc:0.965, test top5:0.998, elapsed time:4.810
+Client: 0, test loss:0.154, test acc:0.952, test top5:0.999, elapsed time:4.925
+Client: 2, test loss:0.107, test acc:0.968, test top5:0.999, elapsed time:5.096
+Client: 4, test loss:0.455, test acc:0.866, test top5:0.996, elapsed time:4.754
+Client: 1, test loss:0.811, test acc:0.758, test top5:0.975, elapsed time:5.065
+F: 0.971 TF: 0.975
+S1
+Round  33, Global loss 0.085, Global Acc 0.975
+Round 34 start
+Client: 8, test loss:0.203, test acc:0.937, test top5:0.998, elapsed time:5.158
+Client: 0, test loss:1.248, test acc:0.723, test top5:0.982, elapsed time:5.112
+Client: 2, test loss:0.102, test acc:0.969, test top5:0.999, elapsed time:4.945
+Client: 7, test loss:0.100, test acc:0.970, test top5:0.999, elapsed time:4.994
+Client: 1, test loss:2.131, test acc:0.506, test top5:0.905, elapsed time:5.032
+F: 0.836 TF: 0.975
+Round  34, Global loss 0.563, Global Acc 0.836
+Round 35 start
+Client: 3, test loss:2.634, test acc:0.454, test top5:0.888, elapsed time:4.960
+Client: 0, test loss:0.337, test acc:0.893, test top5:0.997, elapsed time:4.953
+Client: 8, test loss:27.082, test acc:0.112, test top5:0.675, elapsed time:4.935
+Client: 5, test loss:0.118, test acc:0.963, test top5:0.999, elapsed time:4.981
+Client: 6, test loss:0.102, test acc:0.970, test top5:0.999, elapsed time:5.014
+F: 0.973 TF: 0.973
+S1
+Round  35, Global loss 0.086, Global Acc 0.973
+Round 36 start
+Client: 0, test loss:0.107, test acc:0.967, test top5:0.999, elapsed time:4.944
+Client: 2, test loss:0.104, test acc:0.970, test top5:0.999, elapsed time:5.010
+Client: 7, test loss:0.116, test acc:0.964, test top5:0.999, elapsed time:4.773
+Client: 8, test loss:0.128, test acc:0.961, test top5:0.999, elapsed time:5.048
+Client: 6, test loss:0.259, test acc:0.927, test top5:0.995, elapsed time:5.105
+F: 0.974 TF: 0.976
+S1
+Round  36, Global loss 0.083, Global Acc 0.976
+Round 37 start
+Client: 8, test loss:0.147, test acc:0.955, test top5:0.998, elapsed time:4.702
+Client: 3, test loss:0.120, test acc:0.964, test top5:0.999, elapsed time:5.141
+Client: 7, test loss:0.107, test acc:0.968, test top5:0.999, elapsed time:17.898
+Client: 1, test loss:0.096, test acc:0.971, test top5:0.999, elapsed time:4.835
+Client: 2, test loss:0.106, test acc:0.969, test top5:0.998, elapsed time:4.899
+F: 0.974 TF: 0.974
+S1
+Round  37, Global loss 0.082, Global Acc 0.974
+Round 38 start
+Client: 6, test loss:3.494, test acc:0.485, test top5:0.938, elapsed time:4.916
+Client: 2, test loss:0.097, test acc:0.972, test top5:0.999, elapsed time:5.012
+Client: 4, test loss:0.085, test acc:0.975, test top5:0.999, elapsed time:5.189
+Client: 0, test loss:16.067, test acc:0.142, test top5:0.763, elapsed time:5.146
+Client: 3, test loss:0.106, test acc:0.966, test top5:0.999, elapsed time:5.104
+F: 0.969 TF: 0.976
+S1
+Round  38, Global loss 0.078, Global Acc 0.976
+Round 39 start
+Client: 7, test loss:0.087, test acc:0.973, test top5:0.999, elapsed time:5.245
+Client: 6, test loss:0.110, test acc:0.968, test top5:0.998, elapsed time:5.123
+Client: 0, test loss:0.108, test acc:0.967, test top5:0.999, elapsed time:5.135
+Client: 3, test loss:0.128, test acc:0.959, test top5:0.999, elapsed time:4.913
+Client: 2, test loss:0.096, test acc:0.970, test top5:0.999, elapsed time:4.899
+F: 0.975 TF: 0.975
+S1
+Round  39, Global loss 0.080, Global Acc 0.975
+Round 40 start
+Client: 5, test loss:0.126, test acc:0.963, test top5:0.999, elapsed time:17.800
+Client: 2, test loss:0.212, test acc:0.936, test top5:0.997, elapsed time:4.895
+Client: 6, test loss:0.167, test acc:0.949, test top5:0.998, elapsed time:5.000
+Client: 3, test loss:0.093, test acc:0.971, test top5:0.999, elapsed time:5.134
+Client: 8, test loss:0.144, test acc:0.956, test top5:0.999, elapsed time:4.846
+F: 0.976 TF: 0.976
+S1
+Round  40, Global loss 0.080, Global Acc 0.976
+Round 41 start
+Client: 3, test loss:0.124, test acc:0.960, test top5:0.998, elapsed time:4.781
+Client: 4, test loss:0.117, test acc:0.965, test top5:0.999, elapsed time:5.155
+Client: 1, test loss:0.106, test acc:0.968, test top5:0.999, elapsed time:4.795
+Client: 6, test loss:0.156, test acc:0.952, test top5:0.997, elapsed time:4.994
+Client: 7, test loss:0.187, test acc:0.944, test top5:0.997, elapsed time:5.100
+F: 0.977 TF: 0.975
+S1
+Round  41, Global loss 0.081, Global Acc 0.975
+Round 42 start
+Client: 1, test loss:0.111, test acc:0.968, test top5:0.999, elapsed time:5.210
+Client: 8, test loss:0.108, test acc:0.968, test top5:0.999, elapsed time:5.081
+Client: 3, test loss:7.177, test acc:0.250, test top5:0.716, elapsed time:5.144
+Client: 4, test loss:10.941, test acc:0.181, test top5:0.612, elapsed time:4.765
+Client: 7, test loss:0.127, test acc:0.960, test top5:0.998, elapsed time:5.057
+F: 0.280 TF: 0.408
+Round  42, Global loss 5.485, Global Acc 0.280
+Round 43 start
+Client: 2, test loss:0.442, test acc:0.869, test top5:0.986, elapsed time:5.044
+Client: 3, test loss:0.974, test acc:0.724, test top5:0.969, elapsed time:5.030
+Client: 5, test loss:0.265, test acc:0.914, test top5:0.995, elapsed time:5.125
+Client: 0, test loss:0.133, test acc:0.961, test top5:0.999, elapsed time:4.791
+Client: 6, test loss:0.205, test acc:0.942, test top5:0.997, elapsed time:5.040
+F: 0.937 TF: 0.813
+Round  43, Global loss 0.212, Global Acc 0.937
+Round 44 start
+Client: 2, test loss:0.087, test acc:0.973, test top5:0.999, elapsed time:4.825
+Client: 3, test loss:0.094, test acc:0.971, test top5:0.999, elapsed time:4.894
+Client: 6, test loss:0.116, test acc:0.966, test top5:0.999, elapsed time:4.954
+Client: 1, test loss:0.157, test acc:0.955, test top5:0.998, elapsed time:4.983
+Client: 8, test loss:0.148, test acc:0.954, test top5:0.998, elapsed time:4.852
+F: 0.974 TF: 0.974
+S1
+Round  44, Global loss 0.083, Global Acc 0.974
+Round 45 start
+Client: 8, test loss:0.202, test acc:0.937, test top5:0.997, elapsed time:4.918
+Client: 5, test loss:6.048, test acc:0.251, test top5:0.834, elapsed time:5.093
+Client: 4, test loss:0.219, test acc:0.931, test top5:0.996, elapsed time:4.900
+Client: 2, test loss:0.140, test acc:0.959, test top5:0.998, elapsed time:5.469
+Client: 7, test loss:0.130, test acc:0.959, test top5:0.999, elapsed time:5.245
+F: 0.555 TF: 0.968
+Round  45, Global loss 2.114, Global Acc 0.555
+Round 46 start
+Client: 5, test loss:5.854, test acc:0.271, test top5:0.768, elapsed time:4.884
+Client: 7, test loss:0.170, test acc:0.950, test top5:0.998, elapsed time:4.971
+Client: 1, test loss:0.121, test acc:0.964, test top5:0.999, elapsed time:4.926
+Client: 3, test loss:0.145, test acc:0.957, test top5:0.998, elapsed time:5.010
+Client: 2, test loss:0.083, test acc:0.974, test top5:0.999, elapsed time:4.991
+F: 0.874 TF: 0.976
+Round  46, Global loss 0.371, Global Acc 0.874
+Round 47 start
+Client: 4, test loss:0.093, test acc:0.971, test top5:0.999, elapsed time:4.664
+Client: 7, test loss:0.149, test acc:0.954, test top5:0.999, elapsed time:5.002
+Client: 1, test loss:0.160, test acc:0.952, test top5:0.999, elapsed time:4.839
+Client: 6, test loss:0.087, test acc:0.974, test top5:0.999, elapsed time:5.148
+Client: 8, test loss:0.117, test acc:0.965, test top5:0.998, elapsed time:5.019
+F: 0.978 TF: 0.978
+S1
+Round  47, Global loss 0.072, Global Acc 0.978
+Round 48 start
+Client: 8, test loss:0.098, test acc:0.970, test top5:0.999, elapsed time:5.045
+Client: 6, test loss:2.483, test acc:0.476, test top5:0.908, elapsed time:5.024
+Client: 0, test loss:2.281, test acc:0.514, test top5:0.904, elapsed time:4.896
+Client: 1, test loss:0.093, test acc:0.972, test top5:0.999, elapsed time:5.201
+Client: 4, test loss:0.129, test acc:0.962, test top5:0.998, elapsed time:5.064
+F: 0.554 TF: 0.905
+Round  48, Global loss 1.941, Global Acc 0.554
+Round 49 start
+Client: 2, test loss:0.126, test acc:0.961, test top5:0.999, elapsed time:4.980
+Client: 0, test loss:0.132, test acc:0.960, test top5:0.998, elapsed time:5.284
+Client: 6, test loss:0.095, test acc:0.972, test top5:0.999, elapsed time:5.373
+Client: 4, test loss:0.213, test acc:0.933, test top5:0.997, elapsed time:4.986
+Client: 5, test loss:0.094, test acc:0.971, test top5:0.999, elapsed time:5.185
+F: 0.976 TF: 0.969
+S1
+Round  49, Global loss 0.103, Global Acc 0.969
+
+Process finished with exit code 0

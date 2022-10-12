@@ -1,0 +1,10 @@
+{
+    "stu_train_loss": 0.3778563096931304,
+    "mentor_train_loss": 0.17990365090900415,
+    "stu_test_loss": 0.36550853313348547,
+    "mentor_test_loss": 0.26652650437511194,
+    "stu_train_acc": 0.9073935331606339,
+    "mentor_train_acc": 0.9581033123028391,
+    "stu_test_acc": 0.9058506389776357,
+    "mentor_test_acc": 0.928314696485623
+}

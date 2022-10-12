@@ -137,7 +137,7 @@ class channel_net(nn.Module):
         self.rali = rali
         self.h = h_list[0]
 
-    def forward(self, x, device="cpu"):
+    def forward(self, x, device="cuda"):
         self.h.to(device)
         x = self.enc_fc1(x)
         x = self.relu(x)
@@ -152,13 +152,14 @@ class channel_net(nn.Module):
             x = pow(x.shape[1], 0.5) * pow(0.5, 0.5) * x / x_norm  # since each has ^2 norm as 0.5 -> complex 1
 
             # channel
-            x = complex_mul_taps(self.h, x)
+            x = complex_mul_taps(self.h, x).to(device)
 
         # noise
         n = torch.zeros(x.shape[0], x.shape[1])
         for noise_batch_ind in range(x.shape[0]):
             n[noise_batch_ind] = self.Noise.sample()        #sample()作用：和channel_set_gen中else下类似
         n = n.type(torch.FloatTensor).to(device)
+        # n.to(device)
         x = x + n # noise insertion
 
         # RTN

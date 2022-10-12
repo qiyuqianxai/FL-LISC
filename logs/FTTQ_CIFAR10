@@ -1,0 +1,120 @@
+D:\python\python.exe D:/pengyubo/pythonProj/Ternary-Federated/Ternary_Fed.py
+Files already downloaded and verified
+Files already downloaded and verified
+
+Data:
+ - Train Set: ((50000, 3, 32, 32),(50000,)), Range: [0.000, 255.000], Labels: 0,..,9
+ - Test Set: ((10000, 3, 32, 32),(10000,)), Range: [0.000, 255.000], Labels: 0,..,9
+Data split:
+ - Client 0: [555 555 555 555 555 555 560 555 555 555]
+ - Client 1: [555 555 555 555 555 555 555 555 560 555]
+ - Client 2: [555 555 555 555 555 555 555 560 555 555]
+ - Client 3: [555 555 555 555 555 560 555 555 555 555]
+ - Client 4: [555 555 560 555 555 555 555 555 555 555]
+ - Client 5: [555 555 555 560 555 555 555 555 555 555]
+ - Client 6: [555 555 555 555 555 555 555 555 555 560]
+ - Client 7: [555 555 560 555 555 555 555 555 555 555]
+ - Client 8: [560 560 550 555 555 555 555 555 555 555]
+
+Round 0 start
+Client: 7, test loss:1.827, test acc:0.288, test top5:0.855, elapsed time:11.673
+Client: 6, test loss:2.032, test acc:0.230, test top5:0.780, elapsed time:9.611
+F: 0.277 TF: 0.193
+Round   0, Global loss 1.854, Global Acc 0.277
+Round 1 start
+Client: 0, test loss:1.797, test acc:0.303, test top5:0.868, elapsed time:13.004
+Client: 5, test loss:1.787, test acc:0.311, test top5:0.870, elapsed time:12.901
+F: 0.314 TF: 0.170
+Round   1, Global loss 1.757, Global Acc 0.314
+Round 2 start
+Client: 4, test loss:1.830, test acc:0.302, test top5:0.860, elapsed time:12.779
+Client: 6, test loss:1.728, test acc:0.324, test top5:0.872, elapsed time:13.021
+F: 0.336 TF: 0.207
+Round   2, Global loss 1.741, Global Acc 0.336
+Round 3 start
+Client: 5, test loss:1.696, test acc:0.350, test top5:0.893, elapsed time:12.599
+Client: 2, test loss:1.681, test acc:0.353, test top5:0.888, elapsed time:12.567
+F: 0.359 TF: 0.208
+Round   3, Global loss 1.672, Global Acc 0.359
+Round 4 start
+Client: 6, test loss:1.677, test acc:0.371, test top5:0.882, elapsed time:11.990
+Client: 8, test loss:1.695, test acc:0.352, test top5:0.886, elapsed time:11.780
+F: 0.380 TF: 0.194
+Round   4, Global loss 1.634, Global Acc 0.380
+Round 5 start
+Client: 6, test loss:1.674, test acc:0.360, test top5:0.895, elapsed time:12.869
+Client: 2, test loss:1.622, test acc:0.381, test top5:0.900, elapsed time:12.219
+F: 0.377 TF: 0.198
+Round   5, Global loss 1.616, Global Acc 0.377
+Round 6 start
+Client: 0, test loss:1.771, test acc:0.358, test top5:0.865, elapsed time:10.061
+Client: 2, test loss:1.604, test acc:0.396, test top5:0.902, elapsed time:9.217
+F: 0.363 TF: 0.207
+Round   6, Global loss 1.758, Global Acc 0.363
+Round 7 start
+Client: 8, test loss:1.710, test acc:0.362, test top5:0.869, elapsed time:11.324
+Client: 0, test loss:1.628, test acc:0.399, test top5:0.896, elapsed time:9.687
+F: 0.399 TF: 0.225
+Round   7, Global loss 1.607, Global Acc 0.399
+Round 8 start
+Client: 1, test loss:1.549, test acc:0.417, test top5:0.912, elapsed time:10.117
+Client: 4, test loss:1.747, test acc:0.350, test top5:0.866, elapsed time:10.234
+F: 0.411 TF: 0.253
+Round   8, Global loss 1.579, Global Acc 0.411
+Round 9 start
+Client: 3, test loss:1.619, test acc:0.401, test top5:0.904, elapsed time:9.758
+Client: 5, test loss:1.613, test acc:0.398, test top5:0.902, elapsed time:9.073
+F: 0.429 TF: 0.254
+Round   9, Global loss 1.524, Global Acc 0.429
+Round 10 start
+Client: 7, test loss:1.581, test acc:0.415, test top5:0.907, elapsed time:9.895
+Client: 4, test loss:1.535, test acc:0.418, test top5:0.915, elapsed time:9.731
+F: 0.441 TF: 0.264
+Round  10, Global loss 1.505, Global Acc 0.441
+Round 11 start
+Client: 7, test loss:1.740, test acc:0.384, test top5:0.889, elapsed time:10.200
+Client: 8, test loss:1.475, test acc:0.445, test top5:0.925, elapsed time:10.130
+F: 0.442 TF: 0.254
+Round  11, Global loss 1.504, Global Acc 0.442
+Round 12 start
+Client: 3, test loss:1.514, test acc:0.440, test top5:0.915, elapsed time:9.846
+Client: 4, test loss:1.486, test acc:0.443, test top5:0.923, elapsed time:10.573
+F: 0.458 TF: 0.236
+Round  12, Global loss 1.457, Global Acc 0.458
+Round 13 start
+Client: 4, test loss:1.474, test acc:0.450, test top5:0.927, elapsed time:9.587
+Client: 7, test loss:1.481, test acc:0.445, test top5:0.922, elapsed time:9.698
+F: 0.462 TF: 0.251
+Round  13, Global loss 1.445, Global Acc 0.462
+Round 14 start
+Client: 5, test loss:1.489, test acc:0.451, test top5:0.921, elapsed time:9.659
+Client: 0, test loss:1.534, test acc:0.424, test top5:0.922, elapsed time:9.382
+F: 0.463 TF: 0.232
+Round  14, Global loss 1.434, Global Acc 0.463
+Round 15 start
+Client: 4, test loss:1.484, test acc:0.450, test top5:0.926, elapsed time:9.844
+Client: 2, test loss:3.384, test acc:0.237, test top5:0.811, elapsed time:9.461
+F: 0.299 TF: 0.240
+Round  15, Global loss 2.469, Global Acc 0.299
+Round 16 start
+Client: 3, test loss:2.073, test acc:0.337, test top5:0.820, elapsed time:13.172
+Client: 0, test loss:1.831, test acc:0.345, test top5:0.856, elapsed time:12.584
+F: 0.388 TF: 0.319
+Round  16, Global loss 1.689, Global Acc 0.388
+Round 17 start
+Client: 1, test loss:1.639, test acc:0.413, test top5:0.886, elapsed time:12.887
+Client: 7, test loss:1.488, test acc:0.451, test top5:0.922, elapsed time:12.440
+F: 0.444 TF: 0.190
+Round  17, Global loss 1.530, Global Acc 0.444
+Round 18 start
+Client: 3, test loss:1.460, test acc:0.455, test top5:0.924, elapsed time:12.339
+Client: 0, test loss:1.467, test acc:0.458, test top5:0.928, elapsed time:12.317
+F: 0.484 TF: 0.206
+Round  18, Global loss 1.392, Global Acc 0.484
+Round 19 start
+Client: 1, test loss:1.391, test acc:0.484, test top5:0.933, elapsed time:11.697
+Client: 3, test loss:1.425, test acc:0.471, test top5:0.933, elapsed time:13.298
+F: 0.486 TF: 0.232
+Round  19, Global loss 1.373, Global Acc 0.486
+
+Process finished with exit code 0

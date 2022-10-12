@@ -4,6 +4,7 @@ from torch import nn
 from nets.metor_nets import MentorNet
 from nets.channel_nets import channel_net
 from nets.student_nets import StuNet
+from nets.isc_model import ISCNet
 
 class base_net(nn.Module):
     def __init__(self, isc_model, channel_model):
@@ -18,12 +19,12 @@ class base_net(nn.Module):
         return encoding,encoding_with_noise,decoding
 
 if __name__ == '__main__':
-    stu_model = StuNet("resnet18")
-    mentor_model = MentorNet()
-    channel_model = channel_net()
+    stu_model = ISCNet("vgg11").to("cuda")
+    mentor_model = ISCNet("resnet152").to("cuda")
+    channel_model = channel_net().to("cuda")
 
-    tst_model = base_net(mentor_model,channel_model)
-    summary(tst_model,(3,224,224),device="cpu")
+    # tst_model = base_net(mentor_model,channel_model)
+    # summary(tst_model,(3,224,224),device="cpu")
 
-    tst_model = base_net(stu_model,channel_model)
-    summary(tst_model,(3,224,224),device="cpu")
+    tst_model = base_net(mentor_model,channel_model).to("cuda")
+    summary(tst_model,(3,224,224),device="cuda")
