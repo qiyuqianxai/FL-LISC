@@ -111,7 +111,7 @@ for client_id in range(9):
 font_size = 16
 plt.figure(figsize=(12,9))
 plt.rcParams.update({'font.size':font_size})
-plt.plot(np.array(KF_ACC), c='r', label='KDAT+FedAP',marker="v")
+plt.plot(np.array(KF_ACC), c='r', label='SFL',marker="v")
 plt.plot(np.array(FedAvg_ACC),c='b',label='FedAvg',marker='x')
 plt.plot(np.array(FTTQ_acc),c='g',label='FTTQ',marker='o')
 plt.plot(np.array(STC_acc), c='y', label='STC',marker='+')

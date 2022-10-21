@@ -259,24 +259,26 @@ def get_data_loaders(cfg, verbose=True):
   train_loader = torch.utils.data.DataLoader(CustomImageDataset(x_train, y_train, data_transforms), batch_size=32, shuffle=True)
   test_loader  = torch.utils.data.DataLoader(CustomImageDataset(x_test, y_test, label_transforms), batch_size=cfg.test_batch_size, shuffle=False)
 
-  # examples = enumerate(test_loader)  # img&label
-  # batch_idx, (imgs, labels) = next(examples)  # 读取数据,batch_idx从0开始
+  examples = enumerate(test_loader)  # img&label
+  batch_idx, (imgs, labels) = next(examples)  # 读取数据,batch_idx从0开始
   # 显示6张图片
-  # import matplotlib.pyplot as plt
-  # plt.figure()
-  # for i in range(6):
-  #     plt.subplot(2, 3, i + 1)
-  #     plt.tight_layout()
-  #     # 反归一化，将数据重新映射到0-1之间
-  #     img = imgs[i] / 2 + 0.5
-  #     plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
-  # plt.savefig("res.jpg")
-  # # plt.show()
-  # plt.figure()
-  # for i in range(6):
-  #     img = imgs[i] / 2 + 0.5
-  #     plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
-  #     plt.savefig(f"res{i}.jpg")
+  import matplotlib.pyplot as plt
+  plt.figure()
+  for i in range(6):
+      plt.subplot(2, 3, i + 1)
+      plt.tight_layout()
+      # 反归一化，将数据重新映射到0-1之间
+      img = imgs[i] / 2 + 0.5
+      plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+  plt.savefig("res.jpg")
+  # plt.show()
+  plt.figure()
+  for i in range(6):
+      img = imgs[i] / 2 + 0.5
+      plt.imshow(np.transpose(img.numpy(), (1, 2, 0)))
+      plt.axis('off')
+      # plt.tight_layout()
+      plt.savefig(f"res{i}.jpg",bbox_inches='tight', pad_inches=0.1)
   stats = {"split": [x.shape[0] for x,y in split]}
 
   return client_loaders, train_loader, test_loader, stats

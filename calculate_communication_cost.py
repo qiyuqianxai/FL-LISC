@@ -16,32 +16,8 @@ inter_val = 2
 font_size = 16
 plt.rcParams.update({'font.size':font_size})
 plt.figure(figsize=(12,9))
-# 1
-random.seed(2048)
-np.random.seed(2048)
-res = []
-for i in range(test_count):
-    ce = []
-    mean_std = []
-    for com in range(communication_rounds):
-        SNR_for_each_clinets = random.sample(range(1+com, max_snr, inter_val), clients)
-        mean_SNR = np.mean(SNR_for_each_clinets)
-        for c_snr in SNR_for_each_clinets:
-            v = B_for_clients*np.log2(1+c_snr)
-            t = param_size/v
-            e = p_kt*t
-            ce.append(e)
-        mean_std.append(mean_SNR)
-    mean_std = np.std(mean_std)
-    ce = sum(ce)
-    res.append([mean_std,ce])
-res = sorted(res,key=lambda x:x[0])
-res_x = [x[0] for x in res]
-res_y = [x[1] for x in res]
-print(np.std(res_y))
-plt.plot(res_x,res_y, c='b', label='FedAvg',marker="x")
 
-# 2
+# 1
 random.seed(2048)
 np.random.seed(2048)
 res = []
@@ -65,7 +41,32 @@ res = sorted(res,key=lambda x:x[0])
 res_x = [x[0] for x in res]
 res_y = [x[1] for x in res]
 print(np.std(res_y))
-plt.plot(res_x,res_y, c='r', label='CEFL',marker="v")
+plt.plot(res_x,res_y, c='r', label='SFL',marker="v")
+
+# 2
+random.seed(2048)
+np.random.seed(2048)
+res = []
+for i in range(test_count):
+    ce = []
+    mean_std = []
+    for com in range(communication_rounds):
+        SNR_for_each_clinets = random.sample(range(1+com, max_snr, inter_val), clients)
+        mean_SNR = np.mean(SNR_for_each_clinets)
+        for c_snr in SNR_for_each_clinets:
+            v = B_for_clients*np.log2(1+c_snr)
+            t = param_size/v
+            e = p_kt*t
+            ce.append(e)
+        mean_std.append(mean_SNR)
+    mean_std = np.std(mean_std)
+    ce = sum(ce)
+    res.append([mean_std,ce])
+res = sorted(res,key=lambda x:x[0])
+res_x = [x[0] for x in res]
+res_y = [x[1] for x in res]
+print(np.std(res_y))
+plt.plot(res_x,res_y, c='b', label='FedAvg',marker="x")
 
 # 3
 random.seed(2048)
@@ -122,7 +123,7 @@ print(np.std(res_y))
 plt.plot(res_x,res_y, c='y', label='STC',marker="+")
 
 plt.legend(loc='best')
-plt.ylabel('Communication Overhead (J)')
+plt.ylabel('Communication energy consumption (J)')
 plt.xlabel('Standard Deviation of the mean SNR of each communication round')
 # plt.xticks(range(10),[i+1 for i in range(50) if (i+1)%5==0])
 plt.yticks()
@@ -186,7 +187,7 @@ res_x = [x[0] for x in res]
 res_y = [x[1] for x in res]
 print(np.std(res_y))
 ax = plt.subplot(811)
-ax.plot(res_x, res_y, c='r', label='CEFL', marker="v")
+ax.plot(res_x, res_y, c='r', label='SFL', marker="v")
 # ax.set_title("CEFL")
 ax.legend(loc='best')
 # ax.set_ylabel('Standard Deviation of communication overhead')

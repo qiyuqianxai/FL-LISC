@@ -137,7 +137,7 @@ class channel_net(nn.Module):
         self.rali = rali
         self.h = h_list[0]
 
-    def forward(self, x, device="cuda"):
+    def forward(self, x, device="cpu"):
         self.h.to(device)
         x = self.enc_fc1(x)
         x = self.relu(x)

@@ -14,7 +14,7 @@ class ISCNet(nn.Module):
             self.encoder.load_state_dict(weights)
             self.encoder.fc = nn.Linear(self.encoder.fc.in_features, 512)
         elif model_name == "resnet152":
-            self.encoder = getattr(models, model_name)(pretrained=True)
+            self.encoder = getattr(models, model_name)(pretrained=False)
             self.encoder.fc = nn.Linear(self.encoder.fc.in_features, 512)
         elif model_name == "resnet50":
             self.encoder = getattr(models, model_name)(pretrained=True)
@@ -64,6 +64,6 @@ if __name__ == '__main__':
     # checkpoint = torch.load("mae_visualize_vit_large_ganloss.pth", map_location='cpu')
     # net.load_state_dict(checkpoint['model'], strict=False)
     # summary(net, (3, 224, 224),device="cpu")
-    model_name = "resnet50"
+    model_name = "vgg11"
     model = ISCNet(model_name)
-    summary(model, (3, 224, 224),device="cpu")
+
